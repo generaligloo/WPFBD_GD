@@ -1,0 +1,22 @@
+﻿<Window x:Class="WPFBD_GD_1ER.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFBD_GD_1ER"
+        mc:Ignorable="d"
+        Title="Navigation" Height="300" Width="250">
+    <Window.Resources>
+        <Style TargetType="Calendar"
+           x:Key="DateTimeCalendar">
+            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="BorderBrush" Value="DarkCyan"/>
+            <Setter Property="BorderThickness" Value="5"/>
+            <Setter Property="DisplayMode" Value="Decade"/>
+        </Style>
+    </Window.Resources>
+    <StackPanel VerticalAlignment="Center">
+        <Button Name="btnClient" Content="Client" Margin="5" Click="btnClient_Click"/>
+        <Button Name="btnQuitter" Content="Quitter" Margin="5" Click="btnQuitter_Click"/>
+    </StackPanel>
+</Window>
