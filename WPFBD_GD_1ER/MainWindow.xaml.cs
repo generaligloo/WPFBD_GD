@@ -35,5 +35,11 @@ namespace WPFBD_GD_1ER
         {
             Close();
         }
+
+        private void btnCategorie_Click(object sender, RoutedEventArgs e)
+        {
+            View.EcranCategorie fcate = new View.EcranCategorie();
+            fcate.ShowDialog();
+        }
     }
 }

@@ -33,12 +33,12 @@ namespace WPFBD_GD_1ER.ViewModel
             set { AssignerChamp<bool>(ref _ActiverBcpFiche, value, System.Reflection.MethodBase.GetCurrentMethod().Name); }
         }
 
-        private C_Client _ClientSelectionne;
+        private C_TB_client _ClientSelectionne;
 
-        public C_Client ClientSelectionne
+        public C_TB_client ClientSelectionne
         {
             get { return _ClientSelectionne; }
-            set { AssignerChamp<C_Client>(ref _ClientSelectionne, value, System.Reflection.MethodBase.GetCurrentMethod().Name); }
+            set { AssignerChamp<C_TB_client>(ref _ClientSelectionne, value, System.Reflection.MethodBase.GetCurrentMethod().Name); }
         }
         #endregion
 
@@ -51,9 +51,9 @@ namespace WPFBD_GD_1ER.ViewModel
             set { AssignerChamp<VM_UnClient>(ref _UnClient, value, System.Reflection.MethodBase.GetCurrentMethod().Name); }
         }
 
-        private ObservableCollection<C_Client> _BcpClients = new ObservableCollection<C_Client>();
+        private ObservableCollection<C_TB_client> _BcpClients = new ObservableCollection<C_TB_client>();
 
-        public ObservableCollection<C_Client> BcpClients
+        public ObservableCollection<C_TB_client> BcpClients
         {
             get { return _BcpClients; }
             set { _BcpClients = value; }
@@ -90,11 +90,11 @@ namespace WPFBD_GD_1ER.ViewModel
             cEssaiSelMult = new BaseCommande(EssaiSelMult);
         }
 
-        private ObservableCollection<C_Client> ChargerClients(string chConn)
+        private ObservableCollection<C_TB_client> ChargerClients(string chConn)
         {
-            ObservableCollection<C_Client> rep = new ObservableCollection<C_Client>();
-            List<C_Client> lTmp = new Model.G_Client(chConn).LireClient();
-            foreach (C_Client Tmp in lTmp)
+            ObservableCollection<C_TB_client> rep = new ObservableCollection<C_TB_client>();
+            List<C_TB_client> lTmp = new Model.G_TB_client(chConn).Lire("ID_client");
+            foreach (C_TB_client Tmp in lTmp)
                 rep.Add(Tmp);
             return rep;
         }
@@ -103,13 +103,13 @@ namespace WPFBD_GD_1ER.ViewModel
         {
             if (nAjout == -1)
             {
-                UnClient.ID = new G_Client(chConnexion).AjouterClient(UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti);
-                BcpClients.Add(new C_Client(UnClient.ID, UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti));
+                UnClient.ID = new G_TB_client(chConnexion).Ajouter(UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti);
+                BcpClients.Add(new C_TB_client(UnClient.ID, UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti));
             }
             else
             {
-                new G_Client(chConnexion).ModifierClient(UnClient.ID, UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti);
-                BcpClients[nAjout] = new C_Client(UnClient.ID, UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti);
+                new G_TB_client(chConnexion).Modifier(UnClient.ID, UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti);
+                BcpClients[nAjout] = new C_TB_client(UnClient.ID, UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti);
             }
             ActiverUneFiche = false;
         }
@@ -131,14 +131,14 @@ namespace WPFBD_GD_1ER.ViewModel
         {
             if (ClientSelectionne != null)
             {
-                C_Client Tmp = new Model.G_Client(chConnexion).LireClient_ID(ClientSelectionne.ID);
+                C_TB_client Tmp = new Model.G_TB_client(chConnexion).Lire_ID(ClientSelectionne.ID_client);
                 UnClient = new VM_UnClient();
-                UnClient.ID = Tmp.ID;
-                UnClient.Pre = Tmp.Pre;
-                UnClient.Nom = Tmp.Nom;
-                UnClient.Nai = Tmp.Nai;
-                UnClient.Coti = Tmp.Coti;
-                UnClient.Crea = Tmp.Crea;
+                UnClient.ID = Tmp.ID_client;
+                UnClient.Pre = Tmp.client_prenom;
+                UnClient.Nom = Tmp.client_nom;
+                UnClient.Nai = Tmp.client_nai;
+                UnClient.Coti = Tmp.client_cotisation;
+                UnClient.Crea = Tmp.client_crea;
                 nAjout = BcpClients.IndexOf(ClientSelectionne);
                 ActiverUneFiche = true;
             }
@@ -148,7 +148,7 @@ namespace WPFBD_GD_1ER.ViewModel
         {
             if (ClientSelectionne != null)
             {
-                new Model.G_Client(chConnexion).SupprimerClient(ClientSelectionne.ID);
+                new Model.G_TB_client(chConnexion).Supprimer(ClientSelectionne.ID_client);
                 BcpClients.Remove(ClientSelectionne);
             }
         }
@@ -156,19 +156,19 @@ namespace WPFBD_GD_1ER.ViewModel
         public void EssaiSelMult(object lListe)
         {
             System.Collections.IList lTmp = (System.Collections.IList)lListe;
-            foreach (C_Client p in lTmp)
-            { string s = p.Nom; }
+            foreach (C_TB_client p in lTmp)
+            { string s = p.client_nom; }
             int nTmp = lTmp.Count;
         }
 
         public void ClientSelectionnee2UneClient()
         {
-            UnClient.ID = ClientSelectionne.ID;
-            UnClient.Nom = ClientSelectionne.Nom;
-            UnClient.Pre = ClientSelectionne.Pre;
-            UnClient.Nai = ClientSelectionne.Nai;
-            UnClient.Coti = ClientSelectionne.Coti;
-            UnClient.Crea = ClientSelectionne.Crea;
+            UnClient.ID = ClientSelectionne.ID_client;
+            UnClient.Nom = ClientSelectionne.client_nom;
+            UnClient.Pre = ClientSelectionne.client_prenom;
+            UnClient.Nai = ClientSelectionne.client_nai;
+            UnClient.Coti = ClientSelectionne.client_cotisation;
+            UnClient.Crea = ClientSelectionne.client_crea;
         }
     }
 

@@ -60,12 +60,12 @@
             IsReadOnly="True" AutoGenerateColumns="False" IsEnabled="{Binding Path=ActiverBcpFiche, Mode=OneWay}"
             SelectedItem="{Binding ClientSelectionne, Mode=TwoWay}" SelectionChanged="dgClients_SelectionChanged" >
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=ID}" />
-                <DataGridTextColumn Header="Prénom" Binding="{Binding Path=Pre}" Width="*" />
-                <DataGridTextColumn Header="Nom" Binding="{Binding Path=Nom}" Width="*" />
-                <DataGridTextColumn Header="DN" Binding="{Binding Path=Nai, StringFormat={}{0:dd/MM/yyyy}}" Width="*" />
-                <DataGridTextColumn Header="DCR" Binding="{Binding Path=Crea, StringFormat={}{0:dd/MM/yyyy}}" Width="*" />
-                <DataGridTextColumn Header="DCO" Binding="{Binding Path=Coti, StringFormat={}{0:dd/MM/yyyy}}" Width="*" />
+                <DataGridTextColumn Binding="{Binding Path=ID_client}" />
+                <DataGridTextColumn Header="Prénom" Binding="{Binding Path=client_prenom}" Width="*" />
+                <DataGridTextColumn Header="Nom" Binding="{Binding Path=client_nom}" Width="*" />
+                <DataGridTextColumn Header="DN" Binding="{Binding Path=client_nai, StringFormat={}{0:dd/MM/yyyy}}" Width="*" />
+                <DataGridTextColumn Header="DCR" Binding="{Binding Path=client_crea, StringFormat={}{0:dd/MM/yyyy}}" Width="*" />
+                <DataGridTextColumn Header="DCO" Binding="{Binding Path=client_cotisation, StringFormat={}{0:dd/MM/yyyy}}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" Margin="34,3" >

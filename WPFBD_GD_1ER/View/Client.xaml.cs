@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace WPFBD_GD_1ER.View
 {
@@ -21,6 +11,7 @@ namespace WPFBD_GD_1ER.View
     public partial class EcranClient : Window
     {
         private ViewModel.VM_Client LocalClient;
+
         public EcranClient()
         {
             InitializeComponent();
@@ -28,15 +19,15 @@ namespace WPFBD_GD_1ER.View
             DataContext = LocalClient;
             FlowDocument fd = new FlowDocument();
             Paragraph p = new Paragraph();
-            p.Inlines.Add(new Bold(new Run("Titre de document")));
+            p.Inlines.Add(new Bold(new Run("Table de gestion des clients")));
             p.Inlines.Add(new LineBreak());
             p.Inlines.Add(new Run("Liste des Clients encodées"));
             fd.Blocks.Add(p);
             List l = new List();
-            foreach (Model.C_Client cp in LocalClient.BcpClients)
+            foreach (Model.C_TB_client cp in LocalClient.BcpClients)
             {
-                Paragraph pl = new Paragraph(new Run(cp.Pre + " " + cp.Nom
-                 + " (" + cp.Nai.ToShortDateString() + ") "+ cp.Coti.ToShortDateString()+" / "+ cp.Crea.ToShortDateString()));
+                Paragraph pl = new Paragraph(new Run(cp.client_prenom + " " + cp.client_nom
+                 + " (" + cp.client_nai.ToShortDateString() + ") " + cp.client_cotisation.ToShortDateString() + " / " + cp.client_crea.ToShortDateString()));
                 l.ListItems.Add(new ListItem(pl));
             }
             fd.Blocks.Add(l);

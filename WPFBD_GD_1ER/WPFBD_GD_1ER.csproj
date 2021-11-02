@@ -72,12 +72,31 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\A_Base.cs" />
-    <Compile Include="Model\A_Client.cs" />
-    <Compile Include="Model\C_Client.cs" />
+    <Compile Include="Model\A_TB_categorie.cs" />
+    <Compile Include="Model\A_TB_client.cs" />
+    <Compile Include="Model\A_TB_details.cs" />
+    <Compile Include="Model\A_TB_edition.cs" />
+    <Compile Include="Model\A_TB_livre.cs" />
+    <Compile Include="Model\A_TB_location.cs" />
+    <Compile Include="Model\C_TB_categorie.cs" />
+    <Compile Include="Model\C_TB_client.cs" />
+    <Compile Include="Model\C_TB_details.cs" />
+    <Compile Include="Model\C_TB_edition.cs" />
+    <Compile Include="Model\C_TB_livre.cs" />
+    <Compile Include="Model\C_TB_location.cs" />
     <Compile Include="Model\G_Base.cs" />
-    <Compile Include="Model\G_Client.cs" />
+    <Compile Include="Model\G_TB_categorie.cs" />
+    <Compile Include="Model\G_TB_client.cs" />
+    <Compile Include="Model\G_TB_details.cs" />
+    <Compile Include="Model\G_TB_edition.cs" />
+    <Compile Include="Model\G_TB_livre.cs" />
+    <Compile Include="Model\G_TB_location.cs" />
     <Compile Include="ViewModel\Base.cs" />
+    <Compile Include="ViewModel\Categorie.cs" />
     <Compile Include="ViewModel\Client.cs" />
+    <Compile Include="View\Categorie.xaml.cs">
+      <DependentUpon>Categorie.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Client.xaml.cs">
       <DependentUpon>Client.xaml</DependentUpon>
     </Compile>
@@ -93,6 +112,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Categorie.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Client.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -17,6 +17,7 @@
     </Window.Resources>
     <StackPanel VerticalAlignment="Center">
         <Button Name="btnClient" Content="Client" Margin="5" Click="btnClient_Click"/>
+        <Button Name="btnCategorie" Content="Catégorie" Margin="5" Click="btnCategorie_Click"/>
         <Button Name="btnQuitter" Content="Quitter" Margin="5" Click="btnQuitter_Click"/>
     </StackPanel>
 </Window>
