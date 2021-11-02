@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace WPFBD_GD_1ER
 {
@@ -23,6 +10,9 @@ namespace WPFBD_GD_1ER
         public MainWindow()
         {
             InitializeComponent();
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fr-FR");
+            //string testc = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='" + System.Windows.Forms.Application.StartupPath + @"\bibliotheque.mdf';Integrated Security=True;Connect Timeout=30";
+            //MessageBox.Show(testc);
         }
 
         private void btnClient_Click(object sender, RoutedEventArgs e)
@@ -40,6 +30,12 @@ namespace WPFBD_GD_1ER
         {
             View.EcranCategorie fcate = new View.EcranCategorie();
             fcate.ShowDialog();
+        }
+
+        private void btnEdtion_Click(object sender, RoutedEventArgs e)
+        {
+            View.EcranEdition fedi = new View.EcranEdition();
+            fedi.ShowDialog();
         }
     }
 }

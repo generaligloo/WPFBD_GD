@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WPFBD_GD_1ER.Model;
 
 namespace WPFBD_GD_1ER.ViewModel
@@ -11,7 +8,8 @@ namespace WPFBD_GD_1ER.ViewModel
     public class VM_Client : BasePropriete
     {
         #region Données Écran
-        private string chConnexion = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='" + System.Windows.Forms.Application.StartupPath + @"\bibliotheque.mdf';Integrated Security=True;Connect Timeout=30";
+
+        private string chConnexion = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='" + System.Windows.Forms.Application.StartupPath+ @"\bibliotheque.mdf';Integrated Security=True;Connect Timeout=30";
         private int nAjout;
         private bool _ActiverUneFiche;
 
@@ -40,9 +38,11 @@ namespace WPFBD_GD_1ER.ViewModel
             get { return _ClientSelectionne; }
             set { AssignerChamp<C_TB_client>(ref _ClientSelectionne, value, System.Reflection.MethodBase.GetCurrentMethod().Name); }
         }
-        #endregion
+
+        #endregion Données Écran
 
         #region Données extérieures
+
         private VM_UnClient _UnClient;
 
         public VM_UnClient UnClient
@@ -58,7 +58,8 @@ namespace WPFBD_GD_1ER.ViewModel
             get { return _BcpClients; }
             set { _BcpClients = value; }
         }
-        #endregion
+
+        #endregion Données extérieures
 
         #region Commandes
 
@@ -201,11 +202,13 @@ namespace WPFBD_GD_1ER.ViewModel
             get { return _Nai; }
             set { AssignerChamp<DateTime>(ref _Nai, value, System.Reflection.MethodBase.GetCurrentMethod().Name); }
         }
+
         public DateTime Coti
         {
             get { return _Coti; }
             set { AssignerChamp<DateTime>(ref _Coti, value, System.Reflection.MethodBase.GetCurrentMethod().Name); }
         }
+
         public DateTime Crea
         {
             get { return _Crea; }

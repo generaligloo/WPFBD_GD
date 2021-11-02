@@ -21,9 +21,9 @@ namespace WPFBD_GD_1ER.Model
    : base(sChaineConnexion)
   { }
   #endregion
-  public int Ajouter(string edi_nom, string edi_dat, string edi_pdg_nom, string edi_pdg_prenom)
+  public int Ajouter(string edi_nom, DateTime edi_dat, string edi_pdg_nom, string edi_pdg_prenom)
   { return new A_TB_edition(ChaineConnexion).Ajouter(edi_nom, edi_dat, edi_pdg_nom, edi_pdg_prenom); }
-  public int Modifier(int ID_edition, string edi_nom, string edi_dat, string edi_pdg_nom, string edi_pdg_prenom)
+  public int Modifier(int ID_edition, string edi_nom, DateTime edi_dat, string edi_pdg_nom, string edi_pdg_prenom)
   { return new A_TB_edition(ChaineConnexion).Modifier(ID_edition, edi_nom, edi_dat, edi_pdg_nom, edi_pdg_prenom); }
   public List<C_TB_edition> Lire(string Index)
   { return new A_TB_edition(ChaineConnexion).Lire(Index); }

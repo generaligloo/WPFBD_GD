@@ -92,8 +92,12 @@
     <Compile Include="Model\G_TB_livre.cs" />
     <Compile Include="Model\G_TB_location.cs" />
     <Compile Include="ViewModel\Base.cs" />
+    <Compile Include="ViewModel\Edition.cs" />
     <Compile Include="ViewModel\Categorie.cs" />
     <Compile Include="ViewModel\Client.cs" />
+    <Compile Include="View\Edition.xaml.cs">
+      <DependentUpon>Edition.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Categorie.xaml.cs">
       <DependentUpon>Categorie.xaml</DependentUpon>
     </Compile>
@@ -112,6 +116,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Edition.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Categorie.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -146,15 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="bibliotheque.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bibliotheque_log.ldf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <DependentUpon>bibliotheque.mdf</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

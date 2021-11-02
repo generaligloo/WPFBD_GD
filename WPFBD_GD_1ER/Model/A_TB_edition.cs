@@ -20,7 +20,7 @@ namespace WPFBD_GD_1ER.Model
   	: base(sChaineConnexion)
   { }
   #endregion
-  public int Ajouter(string edi_nom, string edi_dat, string edi_pdg_nom, string edi_pdg_prenom)
+  public int Ajouter(string edi_nom, DateTime edi_dat, string edi_pdg_nom, string edi_pdg_prenom)
   {
    CreerCommande("AjouterTB_edition");
    int res = 0;
@@ -38,7 +38,7 @@ namespace WPFBD_GD_1ER.Model
    Commande.Connection.Close();
    return res;
   }
-  public int Modifier(int ID_edition, string edi_nom, string edi_dat, string edi_pdg_nom, string edi_pdg_prenom)
+  public int Modifier(int ID_edition, string edi_nom, DateTime edi_dat, string edi_pdg_nom, string edi_pdg_prenom)
   {
    CreerCommande("ModifierTB_edition");
    int res = 0;
@@ -66,7 +66,7 @@ namespace WPFBD_GD_1ER.Model
     C_TB_edition tmp = new C_TB_edition();
     tmp.ID_edition = int.Parse(dr["ID_edition"].ToString());
     tmp.edi_nom = dr["edi_nom"].ToString();
-    tmp.edi_dat = dr["edi_dat"].ToString();
+    tmp.edi_dat = DateTime.Parse(dr["edi_dat"].ToString());
     tmp.edi_pdg_nom = dr["edi_pdg_nom"].ToString();
     tmp.edi_pdg_prenom = dr["edi_pdg_prenom"].ToString();
     res.Add(tmp);
@@ -86,7 +86,7 @@ namespace WPFBD_GD_1ER.Model
    {
     res.ID_edition = int.Parse(dr["ID_edition"].ToString());
     res.edi_nom = dr["edi_nom"].ToString();
-    res.edi_dat = dr["edi_dat"].ToString();
+    res.edi_dat = DateTime.Parse(dr["edi_dat"].ToString());
     res.edi_pdg_nom = dr["edi_pdg_nom"].ToString();
     res.edi_pdg_prenom = dr["edi_pdg_prenom"].ToString();
    }
