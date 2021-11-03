@@ -37,5 +37,11 @@ namespace WPFBD_GD_1ER
             View.EcranEdition fedi = new View.EcranEdition();
             fedi.ShowDialog();
         }
+
+        private void btnLivre_Click(object sender, RoutedEventArgs e)
+        {
+            View.EcranLivre flivr = new View.EcranLivre();
+            flivr.ShowDialog();
+        }
     }
 }

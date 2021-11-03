@@ -89,7 +89,7 @@ namespace WPFBD_GD_1ER.ViewModel
         private ObservableCollection<C_TB_categorie> ChargerCategories(string chConn)
         {
             ObservableCollection<C_TB_categorie> rep = new ObservableCollection<C_TB_categorie>();
-            List<C_TB_categorie> lTmp = new Model.G_TB_categorie(chConn).Lire("ID_client");
+            List<C_TB_categorie> lTmp = new Model.G_TB_categorie(chConn).Lire("ID_categorie");
             foreach (C_TB_categorie Tmp in lTmp)
                 rep.Add(Tmp);
             return rep;
@@ -170,8 +170,6 @@ namespace WPFBD_GD_1ER.ViewModel
     {
         private int _ID;
         private string _Nom;
-
-        //private bool _PegiC;
         private short _Pegi;
 
         public int ID
@@ -191,11 +189,5 @@ namespace WPFBD_GD_1ER.ViewModel
             get { return _Pegi; }
             set { AssignerChamp<short>(ref _Pegi, value, System.Reflection.MethodBase.GetCurrentMethod().Name); }
         }
-
-        //public bool PegiC
-        //{
-        //    get { return _PegiC; }
-        //    set { Convert.ToBoolean(_Pegi); }
-        //}
     }
 }

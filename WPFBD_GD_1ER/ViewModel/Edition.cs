@@ -91,7 +91,7 @@ namespace WPFBD_GD_1ER.ViewModel
         private ObservableCollection<C_TB_edition> ChargerEdition(string chConn)
         {
             ObservableCollection<C_TB_edition> rep = new ObservableCollection<C_TB_edition>();
-            List<C_TB_edition> lTmp = new Model.G_TB_edition(chConn).Lire("ID_client");
+            List<C_TB_edition> lTmp = new Model.G_TB_edition(chConn).Lire("ID_edition");
             foreach (C_TB_edition Tmp in lTmp)
                 rep.Add(Tmp);
             return rep;
