@@ -1,15 +1,14 @@
 ﻿<Window x:Class="WPFBD_GD_1ER.View.EcranClient"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPFBD_GD_1ER.View"
         mc:Ignorable="d"
-        Title="Client" Height="480" Width="600" >
+        Title="Client" Height="480" Width="600">
     <Grid Margin="3">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -18,8 +17,9 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBox AcceptsReturn="True" Grid.ColumnSpan="2" />
-        <Grid Name="UneFiche" IsEnabled="{Binding Path=ActiverUneFiche, Mode=OneWay}" >
+        <Grid Name="UneFiche" IsEnabled="{Binding Path=ActiverUneFiche, Mode=OneWay}">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -41,44 +41,45 @@
             <TextBox Name="tbNom" Grid.Row="2" Grid.Column="1" Margin="3"
             Text="{Binding Path=UnClient.Nom, Mode=TwoWay}" />
             <TextBlock Name="tNai" Text="Date Naissance" Grid.Row="3" VerticalAlignment="Center" />
-            <DatePicker Name="dpNai" Grid.Row="3" Grid.Column="1" Margin="3" 
+            <DatePicker Name="dpNai" Grid.Row="3" Grid.Column="1" Margin="3"
                SelectedDate="{Binding Path=UnClient.Nai, Mode=TwoWay, StringFormat='dd/mm/yyyy'}" />
-            <TextBlock Name="tCoti" Text="Date Cotisation" Grid.Row="4" VerticalAlignment="Center"/>
-            <DatePicker Name="dpCoti" Grid.Row="4" Grid.Column="1" Margin="3" 
+            <TextBlock Name="tCoti" Text="Date Cotisation" Grid.Row="4" VerticalAlignment="Center" />
+            <DatePicker Name="dpCoti" Grid.Row="4" Grid.Column="1" Margin="3"
                SelectedDate="{Binding Path=UnClient.Coti, Mode=TwoWay, StringFormat='dd/mm/yyyy'}" />
             <TextBlock Name="tCrea" Text="Date création" Grid.Row="5" VerticalAlignment="Center" />
-            <DatePicker Name="dpCrea" Grid.Row="5" Grid.Column="1" Margin="3" 
+            <DatePicker Name="dpCrea" Grid.Row="5" Grid.Column="1" Margin="3"
                SelectedDate="{Binding Path=UnClient.Crea, Mode=TwoWay, StringFormat='dd/mm/yyyy'}" />
+            <TextBlock Name="tMail" Text="Mail" VerticalAlignment="Center" Grid.Row="6" />
+            <TextBox Name="tbmail" Grid.Column="1" Margin="3" Grid.Row="6"
+            Text="{Binding Path=UnClient.Mail, Mode=TwoWay}" />
         </Grid>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="30,3" >
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="30,3">
             <Button Name="bConfirmer" Content="Confirmer" Margin="3" IsEnabled="{Binding Path=ActiverUneFiche, Mode=OneWay}"
            Command="{Binding cConfirmer}" />
             <Button Name="bAnnuler" Content="Annuler" Margin="3" IsEnabled="{Binding Path=ActiverUneFiche, Mode=OneWay}"
            Command="{Binding cAnnuler}" />
         </StackPanel>
-        <DataGrid Name="dgClients" ItemsSource="{Binding Path=BcpClients}" Grid.Row="2" VerticalScrollBarVisibility="Visible"
+        <DataGrid Name="dgClients" ItemsSource="{Binding Path=BcpClients}" Grid.Row="2" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Visible"
             IsReadOnly="True" AutoGenerateColumns="False" IsEnabled="{Binding Path=ActiverBcpFiche, Mode=OneWay}"
-            SelectedItem="{Binding ClientSelectionne, Mode=TwoWay}" SelectionChanged="dgClients_SelectionChanged" >
+            SelectedItem="{Binding ClientSelectionne, Mode=TwoWay}" SelectionChanged="dgClients_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=ID_client}" />
+                <DataGridTextColumn Header="ID" Binding="{Binding Path=ID_client}" Width="30" />
                 <DataGridTextColumn Header="Prénom" Binding="{Binding Path=client_prenom}" Width="*" />
                 <DataGridTextColumn Header="Nom" Binding="{Binding Path=client_nom}" Width="*" />
-                <DataGridTextColumn Header="DN" Binding="{Binding Path=client_nai, StringFormat={}{0:dd/MM/yyyy}}" Width="*" />
+                <DataGridTextColumn Header="Mail" Binding="{Binding Path=client_mail}" Width="*" />
+                <DataGridTextColumn Header="Naissance" Binding="{Binding Path=client_nai, StringFormat={}{0:dd/MM/yyyy}}" Width="*" />
                 <DataGridTextColumn Header="DCR" Binding="{Binding Path=client_crea, StringFormat={}{0:dd/MM/yyyy}}" Width="*" />
-                <DataGridTextColumn Header="DCO" Binding="{Binding Path=client_cotisation, StringFormat={}{0:dd/MM/yyyy}}" Width="*" />
+                <DataGridTextColumn Header="Création" Binding="{Binding Path=client_cotisation, StringFormat={}{0:dd/MM/yyyy}}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" Margin="34,3" >
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" Margin="34,3" Grid.ColumnSpan="2">
             <Button Name="bAjouter" Content="Ajouter" Margin="3" IsEnabled="{Binding Path=ActiverBcpFiche, Mode=OneWay}"
            Command="{Binding cAjouter}" />
             <Button Name="bModifier" Content="Modifier" Margin="3" IsEnabled="{Binding Path=ActiverBcpFiche, Mode=OneWay}"
            Command="{Binding cModifier}" />
             <Button Name="bSupprimer" Content="Supprimer" Margin="3" IsEnabled="{Binding Path=ActiverBcpFiche, Mode=OneWay}"
            Command="{Binding cSupprimer}" />
-            <Button x:Name="bEssaiSelMult" Content="Sél. Mult." Margin="3" IsEnabled="{Binding ActiverBcpFiche, Mode=OneWay}"
-           Command="{Binding cEssaiSelMult}"
-           CommandParameter="{Binding ElementName=dgClients, Path=SelectedItems}" />
         </StackPanel>
-        <RichTextBox Name="rtbDoc" Grid.Column="1" Grid.RowSpan="4"/>
+        <RichTextBox Name="rtbDoc" Grid.Column="1" Grid.RowSpan="2" />
     </Grid>
 </Window>

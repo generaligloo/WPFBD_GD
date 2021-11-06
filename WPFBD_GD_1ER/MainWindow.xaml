@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Navigation" Height="300" Width="250">
+        Title="Navigation" Height="508.633" Width="600">
     <Window.Resources>
         <Style TargetType="Calendar"
            x:Key="DateTimeCalendar">
@@ -14,11 +14,76 @@
             <Setter Property="DisplayMode" Value="Decade" />
         </Style>
     </Window.Resources>
-    <StackPanel VerticalAlignment="Center">
-        <Button Name="btnClient" Content="Client" Margin="5" Click="btnClient_Click" />
-        <Button Name="btnCategorie" Content="Catégorie" Margin="5" Click="btnCategorie_Click" />
-        <Button Name="btnEdtion" Content="Édition" Margin="5" Click="btnEdtion_Click" />
-        <Button Name="btnLivre" Content="Livre" Margin="5" Click="btnLivre_Click" />
-        <Button Name="btnQuitter" Content="Quitter" Margin="5" Click="btnQuitter_Click" />
-    </StackPanel>
+    <Grid Name="grid_gen">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <GroupBox Name="gb_Client" Header="Section Clients" Grid.Column="0" Margin="3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="67*" />
+                    <RowDefinition Height="14*" />
+                </Grid.RowDefinitions>
+                <DataGrid x:Name="dgClientsPrev" ItemsSource="{Binding BcpClients}" Grid.Row="0" VerticalScrollBarVisibility="Visible"
+            IsReadOnly="True" AutoGenerateColumns="False" IsEnabled="{Binding ActiverBcpFiche, Mode=OneWay}"
+            SelectedItem="{Binding ClientSelectionne, Mode=TwoWay}" SelectionChanged="dgClientsPrev_SelectionChanged" Margin="3,3,3,0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="N°" Binding="{Binding ID_client}" Width="30" />
+                        <DataGridTextColumn Header="Prénom" Binding="{Binding client_prenom}" Width="*" />
+                        <DataGridTextColumn Header="Nom" Binding="{Binding client_nom}" Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <StackPanel VerticalAlignment="Center" Height="21" Grid.Row="1">
+                    <Grid Height="26" Margin="0,0,3,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox Name="cb_majeur" IsEnabled="False" Content="Majeur ?" Grid.Column="0" HorizontalAlignment="Left" Margin="10,0,0,6" VerticalContentAlignment="Center" Width="80" />
+                        <Button Name="btnClient" Content="Gestion des clients" Click="btnClient_Click" Grid.Column="1" Margin="0,1,0,5" />
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+        <GroupBox Name="gb_Location" Grid.Row="1" Grid.Column="0" Header="Section Location" Margin="3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <DataGrid Name="dgLocationPrev" ItemsSource="{Binding Path=BcpLocations}" Grid.Row="0" VerticalScrollBarVisibility="Visible"
+            IsReadOnly="True" AutoGenerateColumns="False" IsEnabled="{Binding Path=ActiverBcpFiche, Mode=OneWay}"
+            SelectedItem="{Binding LocationSelectionne, Mode=TwoWay}" SelectionChanged="dgLocationPrev_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID location" Binding="{Binding Path=ID_location}" />
+                        <DataGridTextColumn Header="ID client" Binding="{Binding Path=ID_client}" Width="*" />
+                        <DataGridTextColumn Header="Date de location" Binding="{Binding Path=dat_location}" Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Grid Grid.Row="1" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="btnLocation" Content="Gestion des locations" Margin="5" Click="btnLocation_Click" Grid.Column="0"/>
+                    <Button Name="btnAffLocationID" Content="Locations du client" Margin="5" Click="btnAffLocationID_Click" Grid.Column="1"/>
+                </Grid>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Name="gb_livre" Header="Section Livres" Margin="0,0,0,165" Grid.RowSpan="2">
+            <StackPanel VerticalAlignment="Center" Margin="3">
+                <Button Name="btnHTML" Content="Générer le stock HTML" Margin="5" Click="btnHTML_Click"/>
+                <Button Name="btnCategorie" Content="Catégorie" Margin="5" Click="btnCategorie_Click" />
+                <Button Name="btnEdtion" Content="Édition" Margin="5" Click="btnEdtion_Click" />
+                <Button Name="btnLivre" Content="Livre" Margin="5" Click="btnLivre_Click" />
+                <Button Name="btnQuitter" Content="Quitter" Margin="5" Click="btnQuitter_Click" />
+            </StackPanel>
+        </GroupBox>
+    </Grid>
 </Window>
