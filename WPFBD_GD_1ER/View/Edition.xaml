@@ -39,7 +39,7 @@
             <TextBox Name="tbNom" Grid.Row="1" Grid.Column="1" Margin="3"
             Text="{Binding Path=UneEdition.Nom, Mode=TwoWay}" />
             <TextBlock Name="tCrea" Text="Date de création" Grid.Row="2" VerticalAlignment="Center" />
-            <DatePicker Name="dpDat" Grid.Row="2" Grid.Column="1" Margin="3"
+            <DatePicker Name="dpDat" Grid.Row="2" Grid.Column="1" Margin="3" 
                SelectedDate="{Binding Path=UneEdition.Dat, Mode=TwoWay, StringFormat=dd-mm-yyyy}" />
             <TextBlock Name="tPrePDG" Text="Prénom PDG*" Grid.Row="3" VerticalAlignment="Center" />
             <TextBox Name="tbPrePDG" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"

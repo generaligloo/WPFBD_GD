@@ -28,13 +28,13 @@ namespace WPFBD_GD_1ER.View
             {
                 if (cp.edi_pdg_nom == "" && cp.edi_pdg_prenom == "")
                 {
-                    Paragraph pl = new Paragraph(new Run("(" + cp.ID_edition + ") " + cp.edi_nom + " - " + cp.edi_dat.Year));
+                    Paragraph pl = new Paragraph(new Run("(" + cp.ID_edition + ") " + cp.edi_nom+ " - " + cp.edi_dat.Year));
                     l.ListItems.Add(new ListItem(pl));
                 }
-                else
+                else 
                 {
                     Paragraph pl = new Paragraph(new Run("(" + cp.ID_edition + ") " + cp.edi_nom + " - " + cp.edi_dat.Year
-                        + " PDG: " + cp.edi_pdg_nom + " " + cp.edi_pdg_prenom));
+                        + " PDG: " + cp.edi_pdg_nom + " " +cp.edi_pdg_prenom));
                     l.ListItems.Add(new ListItem(pl));
                 }
             }

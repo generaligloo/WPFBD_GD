@@ -2,7 +2,9 @@
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace WPFBD_GD_1ER.View
 {
@@ -57,6 +59,8 @@ namespace WPFBD_GD_1ER.View
             tr.Save(fs, System.Windows.DataFormats.Rtf);
             fs.Close();
         }
+
+        
 
         private void bActu_Click(object sender, RoutedEventArgs e)
         {

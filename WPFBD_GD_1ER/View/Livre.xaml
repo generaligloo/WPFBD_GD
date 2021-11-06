@@ -38,30 +38,30 @@
             <TextBlock Name="tID" Text="Identifiant" VerticalAlignment="Center" />
             <TextBox Name="tbID" Grid.Column="1" Margin="3"
             Text="{Binding Path=UnLivre.ID, Mode=TwoWay}" />
-
+            
             <TextBlock Name="tTitre" Text="Titre" Grid.Row="1" VerticalAlignment="Center" />
             <TextBox Name="tbTitre" Grid.Row="1" Grid.Column="1" Margin="3"
             Text="{Binding Path=UnLivre.Titre, Mode=TwoWay}" />
-
+            
             <TextBlock Name="tAuteur" Text="Auteur" Grid.Row="2" VerticalAlignment="Center" />
             <TextBox Name="tbAuteur" Grid.Row="2" Grid.Column="1" Margin="3"
-            Text="{Binding Path=UnLivre.Auteur, Mode=TwoWay}" />
+            Text="{Binding Path=UnLivre.Auteur, Mode=TwoWay}"/>
 
             <TextBlock Name="tStatut" Text="Statut" Grid.Row="3" VerticalAlignment="Center" />
             <CheckBox Name="cbStat" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"
-            IsChecked="{Binding Path=UnLivre.Statut, Mode=TwoWay}" Content="Disponible ?" IsEnabled="False" Margin="3" />
-
+            IsChecked="{Binding Path=UnLivre.Statut, Mode=TwoWay}" Content="Disponible ?" IsEnabled="False" Margin="3"/>
+            
             <TextBlock Name="tCategorie" Text="Catégorie" Grid.Row="4" VerticalAlignment="Center" />
             <ComboBox Grid.Row="4" Grid.Column="1" Margin="3" VerticalAlignment="Center" Name="cboCat"
-                      SelectedValue="{Binding Path=UnLivre.IDC, Mode=TwoWay}" />
+                      SelectedValue="{Binding Path=UnLivre.IDC, Mode=TwoWay}"/>
 
             <TextBlock Name="tEdition" Text="Édition" Grid.Row="5" VerticalAlignment="Center" />
             <ComboBox Grid.Row="5" Grid.Column="1" Margin="3" VerticalAlignment="Center" Name="cboEdi"
-                      SelectedValue="{Binding Path=UnLivre.IDE, Mode=TwoWay}" />
+                      SelectedValue="{Binding Path=UnLivre.IDE, Mode=TwoWay}"/>
 
             <TextBlock Name="tPub" Text="Année de pub" Grid.Row="6" VerticalAlignment="Center" />
-            <TextBox Name="dpPub" Grid.Row="6" Grid.Column="1" Margin="3"
-               Text="{Binding Path=UnLivre.Pub, Mode=TwoWay}" PreviewTextInput="dpPub_PreviewTextInput" />
+            <TextBox Name="dpPub" Grid.Row="6" Grid.Column="1" Margin="3" 
+               Text="{Binding Path=UnLivre.Pub, Mode=TwoWay}" PreviewTextInput="dpPub_PreviewTextInput"/>
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="30,3">
             <Button Name="bConfirmer" Content="Confirmer" Margin="3" IsEnabled="{Binding Path=ActiverUneFiche, Mode=OneWay}"
@@ -92,7 +92,7 @@
             <Button x:Name="bEssaiSelMult" Content="Sél. Mult." Margin="3" IsEnabled="{Binding ActiverBcpFiche, Mode=OneWay}"
            Command="{Binding cEssaiSelMult}" CommandParameter="{Binding ElementName=dgLivre, Path=SelectedItems}" />
             <Button Name="bActu" Content="Actualiser" Margin="3" IsEnabled="{Binding Path=ActiverBcpFiche, Mode=OneWay}"
-                            Click="bActu_Click" />
+                            Click="bActu_Click"/>
         </StackPanel>
         <RichTextBox Name="rtbDoc" Grid.Column="1" Grid.RowSpan="4" />
     </Grid>

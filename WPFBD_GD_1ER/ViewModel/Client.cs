@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
-using System.Windows;
 using WPFBD_GD_1ER.Model;
 
 namespace WPFBD_GD_1ER.ViewModel
 {
-    internal class VM_Client : BasePropriete
+    public class VM_Client : BasePropriete
     {
         #region Données Écran
 
-        private string chConnexion = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='" + System.Windows.Forms.Application.StartupPath + @"\bibliotheque.mdf';Integrated Security=True;Connect Timeout=30";
+        private string chConnexion = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='" + System.Windows.Forms.Application.StartupPath+ @"\bibliotheque.mdf';Integrated Security=True;Connect Timeout=30";
         private int nAjout;
         private bool _ActiverUneFiche;
 
@@ -70,6 +68,7 @@ namespace WPFBD_GD_1ER.ViewModel
         public BaseCommande cAjouter { get; set; }
         public BaseCommande cModifier { get; set; }
         public BaseCommande cSupprimer { get; set; }
+        public BaseCommande cEssaiSelMult { get; set; }
 
         #endregion Commandes
 
@@ -82,7 +81,6 @@ namespace WPFBD_GD_1ER.ViewModel
             UnClient.Nai = DateTime.Today;
             UnClient.Coti = DateTime.Today;
             UnClient.Crea = DateTime.Today;
-            UnClient.Mail = "largowinch@gmail.com";
             BcpClients = ChargerClients(chConnexion);
             ActiverUneFiche = false;
             cConfirmer = new BaseCommande(Confirmer);
@@ -90,6 +88,7 @@ namespace WPFBD_GD_1ER.ViewModel
             cAjouter = new BaseCommande(Ajouter);
             cModifier = new BaseCommande(Modifier);
             cSupprimer = new BaseCommande(Supprimer);
+            cEssaiSelMult = new BaseCommande(EssaiSelMult);
         }
 
         private ObservableCollection<C_TB_client> ChargerClients(string chConn)
@@ -105,25 +104,13 @@ namespace WPFBD_GD_1ER.ViewModel
         {
             if (nAjout == -1)
             {
-                if (TestStringIsNullOrEmpty(UnClient.Pre) || TestStringIsNullOrEmpty(UnClient.Nom))
-                {
-                    MessageBox.Show("Erreur Nom ou prénom invalide");
-                    ActiverUneFiche = false;
-                    return;
-                }
-                else if (!IsValidEmailAddress(UnClient.Mail))
-                {
-                    MessageBox.Show("Email invalide ou manquant");
-                    ActiverUneFiche = false;
-                    return;
-                }
-                UnClient.ID = new G_TB_client(chConnexion).Ajouter(UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti, UnClient.Mail);
-                BcpClients.Add(new C_TB_client(UnClient.ID, UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti, UnClient.Mail));
+                UnClient.ID = new G_TB_client(chConnexion).Ajouter(UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti);
+                BcpClients.Add(new C_TB_client(UnClient.ID, UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti));
             }
             else
             {
-                new G_TB_client(chConnexion).Modifier(UnClient.ID, UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti, UnClient.Mail);
-                BcpClients[nAjout] = new C_TB_client(UnClient.ID, UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti, UnClient.Mail);
+                new G_TB_client(chConnexion).Modifier(UnClient.ID, UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti);
+                BcpClients[nAjout] = new C_TB_client(UnClient.ID, UnClient.Nom, UnClient.Pre, UnClient.Nai, UnClient.Crea, UnClient.Coti);
             }
             ActiverUneFiche = false;
         }
@@ -153,7 +140,6 @@ namespace WPFBD_GD_1ER.ViewModel
                 UnClient.Nai = Tmp.client_nai;
                 UnClient.Coti = Tmp.client_cotisation;
                 UnClient.Crea = Tmp.client_crea;
-                UnClient.Mail = Tmp.client_mail;
                 nAjout = BcpClients.IndexOf(ClientSelectionne);
                 ActiverUneFiche = true;
             }
@@ -168,6 +154,14 @@ namespace WPFBD_GD_1ER.ViewModel
             }
         }
 
+        public void EssaiSelMult(object lListe)
+        {
+            System.Collections.IList lTmp = (System.Collections.IList)lListe;
+            foreach (C_TB_client p in lTmp)
+            { string s = p.client_nom; }
+            int nTmp = lTmp.Count;
+        }
+
         public void ClientSelectionnee2UneClient()
         {
             UnClient.ID = ClientSelectionne.ID_client;
@@ -176,24 +170,6 @@ namespace WPFBD_GD_1ER.ViewModel
             UnClient.Nai = ClientSelectionne.client_nai;
             UnClient.Coti = ClientSelectionne.client_cotisation;
             UnClient.Crea = ClientSelectionne.client_crea;
-            UnClient.Mail = ClientSelectionne.client_mail;
-        }
-
-        public bool TestStringIsNullOrEmpty(string s)
-        {
-            bool result;
-            result = s == null || s == string.Empty;
-            return result;
-        }
-
-        public bool IsValidEmailAddress(string s)
-        {
-            if(TestStringIsNullOrEmpty(s))
-            {
-                return false;
-            }
-            Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
-            return regex.IsMatch(s);
         }
     }
 
@@ -202,7 +178,6 @@ namespace WPFBD_GD_1ER.ViewModel
         private int _ID;
         private string _Nom, _Pre;
         private DateTime _Nai, _Coti, _Crea;
-        private string _Mail;
 
         public int ID
         {
@@ -239,12 +214,5 @@ namespace WPFBD_GD_1ER.ViewModel
             get { return _Crea; }
             set { AssignerChamp<DateTime>(ref _Crea, value, System.Reflection.MethodBase.GetCurrentMethod().Name); }
         }
-
-        public string Mail
-        {
-            get { return _Mail; }
-            set { AssignerChamp<string>(ref _Mail, value, System.Reflection.MethodBase.GetCurrentMethod().Name); }
-        }
     }
-
 }
