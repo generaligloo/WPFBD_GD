@@ -27,7 +27,7 @@ namespace WPFBD_GD_1ER.View
             foreach (Model.C_TB_client cp in LocalClient.BcpClients)
             {
                 Paragraph pl = new Paragraph(new Run(cp.client_prenom + " " + cp.client_nom
-                 + " (" + cp.client_nai.ToShortDateString() + ") " + cp.client_cotisation.ToShortDateString() + " / " + cp.client_crea.ToShortDateString()));
+                 + " (" + cp.client_nai.ToShortDateString() + ") " + cp.client_cotisation.ToShortDateString() + " / " + cp.client_crea.ToShortDateString() + " Mail: " + cp.client_mail.ToString()));
                 l.ListItems.Add(new ListItem(pl));
             }
             fd.Blocks.Add(l);
