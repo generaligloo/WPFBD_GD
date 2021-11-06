@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace WPFBD_GD_1ER.ViewModel
@@ -25,6 +22,7 @@ namespace WPFBD_GD_1ER.ViewModel
             return true;
         }
     }
+
     public class BaseCommande : ICommand
     {
         private bool lParam = false;
@@ -55,5 +53,6 @@ namespace WPFBD_GD_1ER.ViewModel
                     _Action();
             }
         }
+
     }
 }

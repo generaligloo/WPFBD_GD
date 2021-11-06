@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows;
 using WPFBD_GD_1ER.Model;
 
 namespace WPFBD_GD_1ER.ViewModel
@@ -87,7 +85,7 @@ namespace WPFBD_GD_1ER.ViewModel
             cAjouter = new BaseCommande(Ajouter);
             cModifier = new BaseCommande(Modifier);
             cSupprimer = new BaseCommande(Supprimer);
-            cEssaiSelMult = new BaseCommande(EssaiSelMult);    
+            cEssaiSelMult = new BaseCommande(EssaiSelMult);
         }
 
         private ObservableCollection<C_TB_livre> ChargerLivres(string chConn)
@@ -104,7 +102,7 @@ namespace WPFBD_GD_1ER.ViewModel
             if (nAjout == -1)
             {
                 //MessageBox.Show(UnLivre.Titre +"/"+ UnLivre.Auteur + "/" + UnLivre.IDC + "/" + UnLivre.Statut + "/" + UnLivre.Pub + "/" + UnLivre.IDE);
-                UnLivre.ID = new G_TB_livre(chConnexion).Ajouter(UnLivre.Titre, UnLivre.Auteur,UnLivre.IDC,UnLivre.Statut,UnLivre.Pub,UnLivre.IDE);
+                UnLivre.ID = new G_TB_livre(chConnexion).Ajouter(UnLivre.Titre, UnLivre.Auteur, UnLivre.IDC, UnLivre.Statut, UnLivre.Pub, UnLivre.IDE);
                 BcpLivres.Add(new C_TB_livre(UnLivre.ID, UnLivre.Titre, UnLivre.Auteur, UnLivre.IDC, UnLivre.Statut, UnLivre.Pub, UnLivre.IDE));
             }
             else
@@ -226,6 +224,5 @@ namespace WPFBD_GD_1ER.ViewModel
             get { return _Pub; }
             set { AssignerChamp<int?>(ref _Pub, value, System.Reflection.MethodBase.GetCurrentMethod().Name); }
         }
-
     }
 }
