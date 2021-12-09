@@ -18,8 +18,12 @@ namespace WPFBD_GD_1ER.ViewModel
             PropertyChangedEventHandler handler = PropertyChanged;
             field = value;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName.Substring(4)));
-            //OnPropertyChanged();
+            OnPropertyChanged(propertyName);
             return true;
+        }
+        public void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

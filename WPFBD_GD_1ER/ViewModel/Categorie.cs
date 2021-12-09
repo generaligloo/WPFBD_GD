@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Documents;
+using System.Windows.Forms;
 using WPFBD_GD_1ER.Model;
 
 namespace WPFBD_GD_1ER.ViewModel
@@ -67,7 +69,6 @@ namespace WPFBD_GD_1ER.ViewModel
         public BaseCommande cAjouter { get; set; }
         public BaseCommande cModifier { get; set; }
         public BaseCommande cSupprimer { get; set; }
-        public BaseCommande cEssaiSelMult { get; set; }
 
         #endregion Commandes
 
@@ -83,7 +84,6 @@ namespace WPFBD_GD_1ER.ViewModel
             cAjouter = new BaseCommande(Ajouter);
             cModifier = new BaseCommande(Modifier);
             cSupprimer = new BaseCommande(Supprimer);
-            cEssaiSelMult = new BaseCommande(EssaiSelMult);
         }
 
         private ObservableCollection<C_TB_categorie> ChargerCategories(string chConn)
@@ -138,17 +138,29 @@ namespace WPFBD_GD_1ER.ViewModel
         {
             if (CategorieSelectionne != null)
             {
-                new Model.G_TB_categorie(chConnexion).Supprimer(CategorieSelectionne.ID_categorie);
-                BcpCategories.Remove(CategorieSelectionne);
+                bool verif_cat = true;
+                List<C_TB_livre> livretmp = new G_TB_livre(chConnexion).Lire("ID_livre");
+                for (int i = 0; i < livretmp.Count; i++)
+                {
+                    if (livretmp[i].ID_categorie == CategorieSelectionne.ID_categorie)
+                    {
+                        verif_cat = false;
+                    }
+                }
+                if (verif_cat == true)
+                {
+                    if (MessageBox.Show("Supprimer ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                    {
+                        new Model.G_TB_categorie(chConnexion).Supprimer(CategorieSelectionne.ID_categorie);
+                        BcpCategories.Remove(CategorieSelectionne);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Des livres utilisent cette catégorie impossible de la supprimer !");
+                }
+                verif_cat = true;
             }
-        }
-
-        public void EssaiSelMult(object lListe)
-        {
-            System.Collections.IList lTmp = (System.Collections.IList)lListe;
-            foreach (C_TB_categorie p in lTmp)
-            { string s = p.Nom; }
-            int nTmp = lTmp.Count;
         }
 
         public void CategorieSelectionnee2UneCategorie(bool check)
@@ -163,6 +175,34 @@ namespace WPFBD_GD_1ER.ViewModel
             {
                 UneCategorie.Pegi = 0;
             }
+        }
+
+        public FlowDocument GenererFlow()
+        {
+            FlowDocument fd = new FlowDocument();
+            Paragraph p = new Paragraph();
+            p.Inlines.Add(new Bold(new Run("Table de gestion des catégories")));
+            p.Inlines.Add(new LineBreak());
+            p.Inlines.Add(new Run("Liste des catégories encodées"));
+            fd.Blocks.Add(p);
+            List l = new List();
+            foreach (C_TB_categorie cp in BcpCategories)
+            {
+                if (cp.Pegi == 1)
+                {
+                    Paragraph pl = new Paragraph(new Run("(" + cp.ID_categorie + "): " + cp.Nom
+                     + " (PEGI 18+) "));
+                    l.ListItems.Add(new ListItem(pl));
+                }
+                else
+                {
+                    Paragraph pl = new Paragraph(new Run("(" + cp.ID_categorie + "): " + cp.Nom
+                     + " () "));
+                    l.ListItems.Add(new ListItem(pl));
+                }
+            }
+            fd.Blocks.Add(l);
+            return fd;
         }
     }
 

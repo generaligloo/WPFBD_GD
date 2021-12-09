@@ -50,6 +50,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Outlook, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Outlook.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Outlook.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -70,6 +80,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\AffichClient.cs" />
+    <Compile Include="Model\AffichLivreDetail.cs" />
     <Compile Include="Model\A_Base.cs" />
     <Compile Include="Model\A_TB_categorie.cs" />
     <Compile Include="Model\A_TB_client.cs" />
@@ -90,12 +102,25 @@
     <Compile Include="Model\G_TB_edition.cs" />
     <Compile Include="Model\G_TB_livre.cs" />
     <Compile Include="Model\G_TB_location.cs" />
+    <Compile Include="Model\AffichLivre.cs" />
     <Compile Include="ViewModel\Base.cs" />
     <Compile Include="ViewModel\Client.cs" />
+    <Compile Include="ViewModel\Detail.cs" />
     <Compile Include="ViewModel\Edition.cs" />
     <Compile Include="ViewModel\Categorie.cs" />
+    <Compile Include="ViewModel\HTMLgen.cs" />
     <Compile Include="ViewModel\Livre.cs" />
     <Compile Include="ViewModel\Location.cs" />
+    <Compile Include="ViewModel\TXTgen.cs" />
+    <Compile Include="View\AfficherDetails.xaml.cs">
+      <DependentUpon>AfficherDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ajoutDetail.xaml.cs">
+      <DependentUpon>ajoutDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\changeDate.xaml.cs">
+      <DependentUpon>changeDate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Livre.xaml.cs">
       <DependentUpon>Livre.xaml</DependentUpon>
     </Compile>
@@ -126,6 +151,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\AfficherDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ajoutDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\changeDate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Livre.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -169,6 +206,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

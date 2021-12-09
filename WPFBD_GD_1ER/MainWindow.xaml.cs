@@ -1,10 +1,7 @@
 ﻿using System.Windows;
 using WPFBD_GD_1ER.ViewModel;
 using WPFBD_GD_1ER.View;
-using WPFBD_GD_1ER.Model;
-using System;
-using System.Collections.Generic;
-using System.IO;
+using System.Windows.Controls;
 
 namespace WPFBD_GD_1ER
 {
@@ -14,16 +11,32 @@ namespace WPFBD_GD_1ER
     public partial class MainWindow : Window
     {
         private VM_Client prev_client;
-        private VM_location select_loca;
-        private C_TB_client select_client;
+        private VM_Location select_loca;
+        private VM_Categorie prev_cat;
+        private VM_HTML HTMLgen;
+        private VM_TXT TXTgen;
+        private VM_Livre prev_livre;
         string sCon = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='" + System.Windows.Forms.Application.StartupPath + @"\bibliotheque.mdf';Integrated Security=True;Connect Timeout=30";
+        public int? aGen;
+
         public MainWindow()
         {
             InitializeComponent();
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fr-FR");
             //MessageBox.Show(testc);
             prev_client = new VM_Client();
+            prev_livre = new VM_Livre();
+            prev_cat = new VM_Categorie();
+            select_loca = new VM_Location();
+            HTMLgen = new VM_HTML();
+            TXTgen = new VM_TXT();
+            dgLivrePrev.DataContext = prev_livre;
             dgClientsPrev.DataContext = prev_client;
+            prev_client.Init_View();
+            btnHTML.DataContext = HTMLgen;
+            btnAjLocation.DataContext = prev_client;
+            btntxt.DataContext = TXTgen;
+            btnGenererBor.DataContext = select_loca;
         }
 
         private void btnClient_Click(object sender, RoutedEventArgs e)
@@ -55,15 +68,20 @@ namespace WPFBD_GD_1ER
         {
             EcranLivre flivr = new EcranLivre();
             flivr.ShowDialog();
+            prev_livre = new VM_Livre();
+            dgLivrePrev.DataContext = prev_livre;
         }
 
         private void dgClientsPrev_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (dgClientsPrev.SelectedIndex >= 0)
             {
-                select_client = (Model.C_TB_client)dgClientsPrev.SelectedItem;
-                int cID = select_client.ID_client;
-                if (DateTime.Today.Year - select_client.client_nai.Year >= 18)
+                DataGrid dataGrid = dgClientsPrev;
+                DataGridRow row = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromIndex(dataGrid.SelectedIndex);
+                DataGridCell RowColumn = dataGrid.Columns[0].GetCellContent(row).Parent as DataGridCell;
+                string CellValue = ((TextBlock)RowColumn.Content).Text;
+                int nID = System.Int32.Parse(CellValue);
+                if (prev_client.verif_age_CBX(nID))
                 {
                     cb_majeur.IsChecked = true;
                 }
@@ -71,50 +89,18 @@ namespace WPFBD_GD_1ER
                 {
                     cb_majeur.IsChecked = false;
                 }
-                RemplirLocation(cID);
+                RemplirLocation(nID);
             }
         }
 
         private void RemplirLocation(int cID)
         {
-            select_loca = new VM_location(cID);
+            select_loca = new VM_Location(cID);
             dgLocationPrev.DataContext = select_loca;
         }
 
         private void btnHTML_Click(object sender, RoutedEventArgs e)
         {
-            List<C_TB_livre> lTmp = new G_TB_livre(sCon).Lire("ID_livre");
-            List<C_TB_edition> eTmp = new G_TB_edition(sCon).Lire("ID_edition");
-            StreamWriter sw;
-            sw = File.CreateText("livre_stock.html");
-            sw.Write("<html>");
-            sw.Write("<title> Stock de la bibliothèque </title>");
-            sw.Write("<meta charset = 'utf-8'>");
-            sw.Write("<link rel='shortcut icon' href='" + System.Windows.Forms.Application.StartupPath + "\\39859.png'>");
-            sw.Write("<link rel='stylesheet' href='"+System.Windows.Forms.Application.StartupPath+"\\index.css'>");
-            sw.Write("<body>");
-            sw.Write("<table class='content-table'>");
-            sw.Write("<thead>");
-            sw.Write("<tr><th>Auteur</th><th>Titre</th><th>Statut (dispo = 0)</th><th>Maison d'édition</th></tr>");
-            sw.Write("</thead>");
-            sw.Write("<tbody>");
-            foreach (C_TB_livre l in lTmp)
-            {
-                C_TB_edition edit_tmp = new G_TB_edition(sCon).Lire_ID(l.ID_edition);
-                if (l.statut == 1)
-                {
-                    sw.Write("<tr><td>" + l.auteur + "</td><td>" + l.titre + "</td><td>" + l.statut + "</td><td>" + edit_tmp.edi_nom + "</td></tr>");
-                }
-                else
-                {
-                    sw.Write("<tr><td>" + l.auteur + "</td><td>" + l.titre + "</td><td>" + l.statut + "</td><td>" + edit_tmp.edi_nom + "</td></tr>");
-                }
-            }
-            sw.Write("</tbody>");
-            sw.Write("</table>");
-            sw.Write("</body>");
-            sw.Write("</html>");
-            sw.Close();
             stock_HTML SH = new stock_HTML();
             SH.ShowDialog();
         }
@@ -127,16 +113,65 @@ namespace WPFBD_GD_1ER
 
         private void dgLocationPrev_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-
+            if (dgClientsPrev.SelectedIndex >= 0)
+            {
+                btnGenererBor.IsEnabled = true;
+            }
+            else
+            {
+                btnGenererBor.IsEnabled = false;
+            }
         }
 
         private void btnAffLocationID_Click(object sender, RoutedEventArgs e)
         {
             if (dgClientsPrev.SelectedIndex >= 0)
             {
-                EcranLocation flocaid = new EcranLocation(dgClientsPrev.SelectedIndex+1);
+                DataGrid dataGrid = dgClientsPrev;
+                DataGridRow row = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromIndex(dataGrid.SelectedIndex);
+                DataGridCell RowColumn = dataGrid.Columns[0].GetCellContent(row).Parent as DataGridCell;
+                string CellValue = ((TextBlock)RowColumn.Content).Text;
+                int nID = System.Int32.Parse(CellValue);
+                EcranLocation flocaid = new EcranLocation(nID);
                 flocaid.ShowDialog();
             }
+        }
+
+        private void dgLivrePrev_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if(e.AddedItems != null && e.AddedItems.Count > 0)
+            { 
+                DataGrid dataGrid = sender as DataGrid;
+                DataGridRow row = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromIndex(dataGrid.SelectedIndex);
+                DataGridCell RowColumn = dataGrid.Columns[0].GetCellContent(row).Parent as DataGridCell;
+                string CellValue = ((TextBlock)RowColumn.Content).Text;
+                int nID = System.Int32.Parse(CellValue);
+                cb_Dispo.IsChecked = prev_livre.CB_Dispo_verif(nID);
+                cb_Pegi.IsChecked = prev_livre.CB_Pegi_verif(nID);
+                cb_Retard.IsChecked = prev_livre.CB_Retard_verif(nID);
+            }
+        }
+
+        private void btnAjLocation_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void dgClientsPrev_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            prev_client = new VM_Client();
+            dgClientsPrev.DataContext = prev_client;
+        }
+
+        private void btnGenererBor_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void dgLocationPrev_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            prev_client = new VM_Client();
+            dgClientsPrev.DataContext = prev_client;
         }
     }
 }

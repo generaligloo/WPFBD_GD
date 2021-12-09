@@ -28,29 +28,7 @@ namespace WPFBD_GD_1ER.View
             cboEdi.ItemsSource = LocalEdition.BcpEditions;
             cboEdi.DisplayMemberPath = "edi_nom";
             cboEdi.SelectedValuePath = "ID_edition";
-            FlowDocument fd = new FlowDocument();
-            Paragraph p = new Paragraph();
-            p.Inlines.Add(new Bold(new Run("Table de gestion des livres")));
-            p.Inlines.Add(new LineBreak());
-            p.Inlines.Add(new Run("Liste des livres encodées"));
-            fd.Blocks.Add(p);
-            List l = new List();
-            foreach (Model.C_TB_livre cp in LocalLivre.BcpLivres)
-            {
-                if (cp.statut == 1)
-                {
-                    Paragraph pl = new Paragraph(new Run("(" + cp.ID_livre + "): " + cp.titre + " - " + cp.ID_livre
-                     + " (indisponible) "));
-                    l.ListItems.Add(new ListItem(pl));
-                }
-                else
-                {
-                    Paragraph pl = new Paragraph(new Run("(" + cp.ID_livre + "): " + cp.titre + " - " + cp.ID_livre
-                     + " (disponible) "));
-                    l.ListItems.Add(new ListItem(pl));
-                }
-            }
-            fd.Blocks.Add(l);
+            FlowDocument fd = LocalLivre.GenererFlow();
             rtbDoc.Document = fd;
             FileStream fs = new FileStream(@"d:\essai.rtf", FileMode.Create);
             TextRange tr = new TextRange(rtbDoc.Document.ContentStart, rtbDoc.Document.ContentEnd);
@@ -61,29 +39,7 @@ namespace WPFBD_GD_1ER.View
         private void bActu_Click(object sender, RoutedEventArgs e)
         {
             rtbDoc.Document.Blocks.Clear();
-            FlowDocument fd = new FlowDocument();
-            Paragraph p = new Paragraph();
-            p.Inlines.Add(new Bold(new Run("Table de gestion des livres")));
-            p.Inlines.Add(new LineBreak());
-            p.Inlines.Add(new Run("Liste des livres encodées"));
-            fd.Blocks.Add(p);
-            List l = new List();
-            foreach (Model.C_TB_livre cp in LocalLivre.BcpLivres)
-            {
-                if (cp.statut == 1)
-                {
-                    Paragraph pl = new Paragraph(new Run("(" + cp.ID_livre + "): " + cp.titre + " - " + cp.ID_livre
-                     + " (indisponible) "));
-                    l.ListItems.Add(new ListItem(pl));
-                }
-                else
-                {
-                    Paragraph pl = new Paragraph(new Run("(" + cp.ID_livre + "): " + cp.titre + " - " + cp.ID_livre
-                     + " (disponible) "));
-                    l.ListItems.Add(new ListItem(pl));
-                }
-            }
-            fd.Blocks.Add(l);
+            FlowDocument fd = LocalLivre.GenererFlow();
             rtbDoc.Document = fd;
             FileStream fs = new FileStream(@"d:\essai.rtf", FileMode.Create);
             TextRange tr = new TextRange(rtbDoc.Document.ContentStart, rtbDoc.Document.ContentEnd);

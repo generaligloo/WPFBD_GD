@@ -72,8 +72,6 @@
            Command="{Binding cModifier}" />
             <Button Name="bSupprimer" Content="Supprimer" Margin="3" IsEnabled="{Binding Path=ActiverBcpFiche, Mode=OneWay}"
            Command="{Binding cSupprimer}" />
-            <Button x:Name="bEssaiSelMult" Content="Sél. Mult." Margin="3" IsEnabled="{Binding ActiverBcpFiche, Mode=OneWay}"
-           Command="{Binding cEssaiSelMult}" CommandParameter="{Binding ElementName=dgEdition, Path=SelectedItems}" />
             <Button Name="bActu" Content="Actualiser" Margin="3" IsEnabled="{Binding Path=ActiverBcpFiche, Mode=OneWay}"
                             Click="bActu_Click" />
         </StackPanel>

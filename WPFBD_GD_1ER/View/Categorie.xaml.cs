@@ -17,29 +17,8 @@ namespace WPFBD_GD_1ER.View
             InitializeComponent();
             LocalCategorie = new ViewModel.VM_Categorie();
             DataContext = LocalCategorie;
-            FlowDocument fd = new FlowDocument();
-            Paragraph p = new Paragraph();
-            p.Inlines.Add(new Bold(new Run("Table de gestion des catégories")));
-            p.Inlines.Add(new LineBreak());
-            p.Inlines.Add(new Run("Liste des catégories encodées"));
-            fd.Blocks.Add(p);
-            List l = new List();
-            foreach (Model.C_TB_categorie cp in LocalCategorie.BcpCategories)
-            {
-                if (cp.Pegi == 1)
-                {
-                    Paragraph pl = new Paragraph(new Run("(" + cp.ID_categorie + "): " + cp.Nom
-                     + " (PEGI 18+) "));
-                    l.ListItems.Add(new ListItem(pl));
-                }
-                else
-                {
-                    Paragraph pl = new Paragraph(new Run("(" + cp.ID_categorie + "): " + cp.Nom
-                     + " () "));
-                    l.ListItems.Add(new ListItem(pl));
-                }
-            }
-            fd.Blocks.Add(l);
+            rtbDoc.Document.Blocks.Clear();
+            FlowDocument fd = LocalCategorie.GenererFlow();
             rtbDoc.Document = fd;
             FileStream fs = new FileStream(@"d:\essai.rtf", FileMode.Create);
             TextRange tr = new TextRange(rtbDoc.Document.ContentStart, rtbDoc.Document.ContentEnd);
@@ -73,29 +52,7 @@ namespace WPFBD_GD_1ER.View
         private void bActu_Click(object sender, RoutedEventArgs e)
         {
             rtbDoc.Document.Blocks.Clear();
-            FlowDocument fd = new FlowDocument();
-            Paragraph p = new Paragraph();
-            p.Inlines.Add(new Bold(new Run("Table de gestion des catégories")));
-            p.Inlines.Add(new LineBreak());
-            p.Inlines.Add(new Run("Liste des catégories encodées"));
-            fd.Blocks.Add(p);
-            List l = new List();
-            foreach (Model.C_TB_categorie cp in LocalCategorie.BcpCategories)
-            {
-                if (cp.Pegi == 1)
-                {
-                    Paragraph pl = new Paragraph(new Run("(" + cp.ID_categorie + "): " + cp.Nom
-                     + " (PEGI 18+) "));
-                    l.ListItems.Add(new ListItem(pl));
-                }
-                else
-                {
-                    Paragraph pl = new Paragraph(new Run("(" + cp.ID_categorie + "): " + cp.Nom
-                     + " () "));
-                    l.ListItems.Add(new ListItem(pl));
-                }
-            }
-            fd.Blocks.Add(l);
+            FlowDocument fd = LocalCategorie.GenererFlow();
             rtbDoc.Document = fd;
             FileStream fs = new FileStream(@"d:\essai.rtf", FileMode.Create);
             TextRange tr = new TextRange(rtbDoc.Document.ContentStart, rtbDoc.Document.ContentEnd);

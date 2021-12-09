@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Documents;
+using System.Windows.Forms;
 using WPFBD_GD_1ER.Model;
 
 namespace WPFBD_GD_1ER.ViewModel
@@ -68,7 +70,6 @@ namespace WPFBD_GD_1ER.ViewModel
         public BaseCommande cAjouter { get; set; }
         public BaseCommande cModifier { get; set; }
         public BaseCommande cSupprimer { get; set; }
-        public BaseCommande cEssaiSelMult { get; set; }
 
         #endregion Commandes
 
@@ -85,7 +86,6 @@ namespace WPFBD_GD_1ER.ViewModel
             cAjouter = new BaseCommande(Ajouter);
             cModifier = new BaseCommande(Modifier);
             cSupprimer = new BaseCommande(Supprimer);
-            cEssaiSelMult = new BaseCommande(EssaiSelMult);
         }
 
         private ObservableCollection<C_TB_edition> ChargerEdition(string chConn)
@@ -160,17 +160,29 @@ namespace WPFBD_GD_1ER.ViewModel
         {
             if (EditionSelectionne != null)
             {
-                new Model.G_TB_edition(chConnexion).Supprimer(EditionSelectionne.ID_edition);
-                BcpEditions.Remove(EditionSelectionne);
+                bool verif_cat = true;
+                List<C_TB_livre> livretmp = new G_TB_livre(chConnexion).Lire("ID_livre");
+                for (int i = 0; i < livretmp.Count; i++)
+                {
+                    if (livretmp[i].ID_edition == EditionSelectionne.ID_edition)
+                    {
+                        verif_cat = false;
+                    }
+                }
+                if (verif_cat == true)
+                {
+                    if (MessageBox.Show("Supprimer ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                    {
+                        new Model.G_TB_edition(chConnexion).Supprimer(EditionSelectionne.ID_edition);
+                        BcpEditions.Remove(EditionSelectionne);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Des livres utilisent cette maison d'édition, impossible de la supprimer !");
+                }
+                verif_cat = true;
             }
-        }
-
-        public void EssaiSelMult(object lListe)
-        {
-            System.Collections.IList lTmp = (System.Collections.IList)lListe;
-            foreach (C_TB_edition p in lTmp)
-            { string s = p.edi_nom; }
-            int nTmp = lTmp.Count;
         }
 
         public void EditionSelectionnee2UneEdition()
@@ -180,6 +192,33 @@ namespace WPFBD_GD_1ER.ViewModel
             UneEdition.Dat = EditionSelectionne.edi_dat;
             UneEdition.NomP = EditionSelectionne.edi_pdg_nom;
             UneEdition.PreP = EditionSelectionne.edi_pdg_prenom;
+        }
+
+        public FlowDocument GenererFlow()
+        {
+            FlowDocument fd = new FlowDocument();
+            Paragraph p = new Paragraph();
+            p.Inlines.Add(new Bold(new Run("Table de gestion des maisons d'édition")));
+            p.Inlines.Add(new LineBreak());
+            p.Inlines.Add(new Run("Liste des maisons encodées"));
+            fd.Blocks.Add(p);
+            List l = new List();
+            foreach (Model.C_TB_edition cp in BcpEditions)
+            {
+                if (cp.edi_pdg_nom == "" && cp.edi_pdg_prenom == "")
+                {
+                    Paragraph pl = new Paragraph(new Run("(" + cp.ID_edition + ") " + cp.edi_nom + " - " + cp.edi_dat.Year));
+                    l.ListItems.Add(new ListItem(pl));
+                }
+                else
+                {
+                    Paragraph pl = new Paragraph(new Run("(" + cp.ID_edition + ") " + cp.edi_nom + " - " + cp.edi_dat.Year
+                        + " PDG: " + cp.edi_pdg_nom + " " + cp.edi_pdg_prenom));
+                    l.ListItems.Add(new ListItem(pl));
+                }
+            }
+            fd.Blocks.Add(l);
+            return fd;
         }
     }
 

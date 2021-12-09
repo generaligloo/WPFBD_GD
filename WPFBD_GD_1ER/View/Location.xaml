@@ -52,7 +52,7 @@
             </ComboBox>
             <TextBlock Name="tDat" Text="Date location" Grid.Row="3" VerticalAlignment="Center" />
             <DatePicker Name="dpDatLoc" Grid.Row="3" Grid.Column="1" Margin="3"
-               SelectedDate="{Binding Path=UneEdition.DatLoc, Mode=TwoWay, StringFormat=dd-mm-yyyy}" />
+               SelectedDate="{Binding Path=UneLocation.DatLoc, Mode=TwoWay, StringFormat=dd-mm-yyyy}" />
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="30,3">
             <Button Name="bConfirmer" Content="Confirmer" Margin="3" IsEnabled="{Binding Path=ActiverUneFiche, Mode=OneWay}"
@@ -66,8 +66,14 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID location" Binding="{Binding Path=ID_location}" />
                 <DataGridTextColumn Header="ID client" Binding="{Binding Path=ID_client}" Width="*" />
-                <DataGridTextColumn Header="Date de location" Binding="{Binding Path=dat_location}" Width="*" />
+                <DataGridTextColumn Header="Date de location" Binding="{Binding Path=dat_location, StringFormat=dd-mm-yyyy}" Width="*" />
             </DataGrid.Columns>
+            <DataGrid.InputBindings>
+                <MouseBinding MouseAction="LeftDoubleClick"
+                                      Command="{Binding cAffDetails}"
+                                      CommandParameter="{Binding ElementName=dgLocation, Path=SelectedItem}"
+                            />
+            </DataGrid.InputBindings>
         </DataGrid>
         <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" Margin="34,3">
             <Button Name="bAjouter" Content="Ajouter" Margin="3" IsEnabled="{Binding Path=ActiverBcpFiche, Mode=OneWay}"
@@ -76,8 +82,6 @@
            Command="{Binding cModifier}" />
             <Button Name="bSupprimer" Content="Supprimer" Margin="3" IsEnabled="{Binding Path=ActiverBcpFiche, Mode=OneWay}"
            Command="{Binding cSupprimer}" />
-            <Button Name="bEssaiSelMult" Content="Sél. Mult." Margin="3" IsEnabled="{Binding ActiverBcpFiche, Mode=OneWay}"
-           Command="{Binding cEssaiSelMult}" CommandParameter="{Binding ElementName=dgLocation, Path=SelectedItems}" />
         </StackPanel>
         <RichTextBox Name="rtbDoc" Grid.Column="1" Grid.RowSpan="4" />
     </Grid>
